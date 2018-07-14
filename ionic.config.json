@@ -1,0 +1,8 @@
+{
+  "name": "budget-manager-v2",
+  "app_id": "20527eae",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
