@@ -1,4 +1,16 @@
-<!-- Generated template for the EndOfTheMonthComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-card>
+
+  <ion-card-header class="quantity-header">
+    Proyectado
+  </ion-card-header>
+
+  <ion-card-content class="quantity-card">
+    <div>
+      <span class="quantity">{{ quantityAvailable | currency }}</span>
+    </div>
+    <div>
+      <span>a fin de mes</span>
+    </div>
+  </ion-card-content>
+
+</ion-card>

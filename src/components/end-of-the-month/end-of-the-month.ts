@@ -12,11 +12,10 @@ import { Component } from '@angular/core';
 })
 export class EndOfTheMonthComponent {
 
-  text: string;
+  quantityAvailable: number = 2478;
 
   constructor() {
-    console.log('Hello EndOfTheMonthComponent Component');
-    this.text = 'End of the month Component';
+
   }
 
 }
