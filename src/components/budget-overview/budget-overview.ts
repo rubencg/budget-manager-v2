@@ -12,11 +12,25 @@ import { Component } from '@angular/core';
 })
 export class BudgetOverviewComponent {
 
-  text: string;
+  categoryChunks: any;
 
   constructor() {
-    console.log('Hello BudgetOverviewComponent Component');
-    this.text = 'Budget Overview Component';
+    this.categoryChunks = [
+      {
+        title: "Despensa",
+        currentTotal: 6702,
+        currentMax: 6000,
+        image: '../../assets/imgs/categories/png/toast.png',
+        color: 'expense'
+      },
+      {
+        title: "Entretenimiento",
+        currentTotal: 1400,
+        currentMax: 3200,
+        image: '../../assets/imgs/categories/png/theater.png',
+        color: 'income'
+      }
+    ];
   }
 
 }

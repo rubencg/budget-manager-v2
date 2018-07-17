@@ -1,4 +1,22 @@
-<!-- Generated template for the AddEntryComponent component -->
-<div>
-  {{text}}
-</div>
+<div class="content">
+    <ion-grid>
+      <ion-row class="center-row">
+        <ion-col width-33>
+          <button ion-button [outline]="expenseActive" icon-only color="expense" large>
+            <ion-icon name="md-remove-circle"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col width-33>
+          <button ion-button [outline]="incomeActive" icon-only color="income" large>
+            <ion-icon name="md-add-circle"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col width-33>
+          <button ion-button [outline]="budgetActive" icon-only color="budget" large>
+            <ion-icon name="md-time"></ion-icon>
+          </button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>

@@ -1,22 +1,15 @@
-<div class="content">
-    <ion-grid>
-      <ion-row class="center-row">
-        <ion-col width-33>
-          <button ion-button [outline]="expenseActive" icon-only color="expense" large>
-            <ion-icon name="md-remove-circle"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col width-33>
-          <button ion-button [outline]="incomeActive" icon-only color="income" large>
-            <ion-icon name="md-add-circle"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col width-33>
-          <button ion-button [outline]="budgetActive" icon-only color="budget" large>
-            <ion-icon name="md-time"></ion-icon>
-          </button>
-        </ion-col>
+<ion-item-group>
+  <ion-item-divider color="light">
+    Desglose por categoria
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngFor="let category of categoryChunks">
+      <ion-avatar item-left>
+        <img [src]="category.image">
+      </ion-avatar>
+      {{category.title}}
+      <ion-badge [color]="category.color" item-right>{{ category.currentTotal | currency:'USD':true:'1.2-2' }} de {{ category.currentMax | currency:'USD':true:'1.2-2' }}</ion-badge>
+    </ion-item>
 
-      </ion-row>
-    </ion-grid>
-  </div>
+  </ion-list>
+</ion-item-group>
