@@ -1,11 +1,11 @@
-export interface Entry{
+export interface Entry {
   $key?: string;
   date: string;
   amount: number;
   notes?: string;
 }
 
-export interface Account{
+export interface Account {
   $key?: string;
   currentBalance: number;
   name: string;
@@ -14,22 +14,22 @@ export interface Account{
   type?: AccountType;
 }
 
-export interface Expense extends Entry{
+export interface Expense extends Entry {
   category: CategoryBasic;
   fromAccount: IdNameBasic;
 }
 
-export interface Income extends Entry{
+export interface Income extends Entry {
   category: CategoryBasic;
   toAccount: IdNameBasic;
   isApplied?: boolean;
 }
 
-export interface BudgetExpense extends Entry{
+export interface BudgetExpense extends Entry {
   category: CategoryBasic;
 }
 
-export interface Transfer{
+export interface Transfer {
   $key?: string;
   fromAccount: IdNameBasic;
   toAccount: IdNameBasic;
@@ -37,26 +37,26 @@ export interface Transfer{
   date: string;
 }
 
-export interface CategoryBasic{
+export interface CategoryBasic {
   id: string;
   name: string;
-  subcategory : IdNameBasic;
+  subcategory: IdNameBasic;
   img?: string;
 }
 
-export interface IdNameBasic{
+export interface IdNameBasic {
   id: string;
   name: string;
   img?: string;
 }
 
-export enum EntryType{
+export enum EntryType {
   Expense = 1,
   Income = 2,
   BudgetExpense = 3
 }
 
-export enum AccountType{
+export enum AccountType {
   Debit = 1,
   Cash = 2,
   Credit = 3,
@@ -71,9 +71,9 @@ export interface Category {
   subcategories?: IdNameBasic[];
 }
 
-export interface Group{
-title: string,
-date: Date,
-toggleActive: boolean,
-totalValue: number
+export interface Group {
+  title: string,
+  date: Date,
+  toggleActive: boolean,
+  totalValue: number
 }

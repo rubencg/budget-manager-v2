@@ -16,6 +16,10 @@ import { LoginPage } from '../pages/login/login';
 import { ProvidersModule } from '../providers/providers.module';
 import { FIREBASE_CONFIG } from './firebase.config';
 import { AngularFireModule } from '../../node_modules/angularfire2';
+import { EnterQuantityPageModule } from '../pages/enter-quantity/enter-quantity.module';
+import { EnterQuantityPage } from '../pages/enter-quantity/enter-quantity';
+import { SelectAccountPage } from '../pages/select-account/select-account';
+import { SelectAccountPageModule } from '../pages/select-account/select-account.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,8 @@ import { AngularFireModule } from '../../node_modules/angularfire2';
     BrowserModule,
     ComponentsModule,
     ProvidersModule,
+    EnterQuantityPageModule,
+    SelectAccountPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -40,7 +46,9 @@ import { AngularFireModule } from '../../node_modules/angularfire2';
     StatisticsPage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    EnterQuantityPage,
+    SelectAccountPage
   ],
   providers: [
     StatusBar,

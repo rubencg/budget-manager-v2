@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { EnterQuantityPage } from '../../pages/enter-quantity/enter-quantity';
+import { EntryType } from '../../interfaces';
 
-/**
- * Generated class for the AddEntryComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'add-entry',
   templateUrl: 'add-entry.html'
 })
 export class AddEntryComponent {
 
-  text: string;
+  constructor(private nav: NavController) {
 
-  constructor() {
-    console.log('Hello AddEntryComponent Component');
-    this.text = 'Add Entry Component';
+  }
+
+  addExpense(){
+    this.nav.push(EnterQuantityPage,{
+      entryType: EntryType.Expense
+    })
   }
 
 }

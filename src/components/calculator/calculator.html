@@ -1,0 +1,36 @@
+<div class="calculator">
+  <div class="result">
+      {{ result }}
+  </div>
+  <ion-grid>
+      <ion-row>
+          <ion-col width-50><div class="calcbutton" (click)="clearAll()">AC</div></ion-col>
+          <ion-col width-25><div class="calcbutton" (click)="setToNegativePositive()">&plusmn;</div></ion-col>
+          <ion-col width-25><div class="calcbutton" (click)="calculate('+')">+</div></ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('7')">7</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('8')">8</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('9')">9</div></ion-col>
+          <ion-col width-25><div class="calcbutton" (click)="calculate('/')">&#247;</div></ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('4')">4</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('5')">5</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('6')">6</div></ion-col>
+          <ion-col width-25><div class="calcbutton" (click)="calculate('*')">*</div></ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('1')">1</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('2')">2</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('3')">3</div></ion-col>
+          <ion-col width-25><div class="calcbutton" (click)="calculate('-')">-</div></ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('.')">.</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="addToCalculation('0')">0</div></ion-col>
+          <ion-col width-25><div class="inner" (click)="deleteLastChar()">DEL</div></ion-col>
+          <ion-col width-25><div class="equalbutton" (click)="getTotal()">=</div></ion-col>
+      </ion-row>
+  </ion-grid>
+</div>
