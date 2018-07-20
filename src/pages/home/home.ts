@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +9,25 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private authProvider: AuthProvider,
+    private alertCtrl: AlertController) {
 
   }
 
+  logout(): void {
+    this.authProvider.logoutUser()
+      .then(loggedOut => {
+        if (loggedOut) {
+          this.navCtrl.setRoot(LoginPage);
+        }
+      })
+      .catch(error => {
+        let alert = this.alertCtrl.create({
+          title: "Error",
+          message: error,
+          buttons: ['Ok']
+        });
+        alert.present();
+      });
+  }
 }
