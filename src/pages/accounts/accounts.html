@@ -13,20 +13,20 @@
 
 
 <ion-content>
-  <ion-item-group *ngFor="let group of accountsChunk">
-    <ion-item-divider color="light">
-      {{group.title}}
-      <ion-badge color="primary" item-right>{{group.totalValue | currency:'USD':true:'1.2-2' }}</ion-badge>
+  <ion-item-group *ngFor="let group of accountsChunk" >
+    <ion-item-divider color="light" >
+        {{group.title}}
+        <ion-badge color="primary" item-right>{{group.totalValue | currency:'USD':true:'1.2-2' }}</ion-badge>
     </ion-item-divider>
     <ion-list>
-      <ion-item *ngFor="let entry of group.accounts">
-        <ion-avatar item-left>
-          <img [src]="entry.image">
-        </ion-avatar>
-        {{entry.title}}
-        <ion-badge color="primary" item-right>{{ entry.total | currency:'USD':true:'1.2-2' }}</ion-badge>
-      </ion-item>
+        <ion-item *ngFor="let entry of group.entries" (click)="accountSelected(entry)">
+            <ion-avatar item-left>
+                <img [src]="entry.img">
+            </ion-avatar>
+            {{entry.name}}
+            <ion-badge color="primary" item-right>{{ entry.currentBalance | currency:'USD':true:'1.2-2' }}</ion-badge>
+        </ion-item>
 
     </ion-list>
-  </ion-item-group>
+</ion-item-group>
 </ion-content>

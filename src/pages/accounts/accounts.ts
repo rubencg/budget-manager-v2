@@ -1,57 +1,57 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the AccountsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { AccountProvider } from '../../providers/account/account';
+import { Account, AccountType } from '../../interfaces';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'page-accounts',
   templateUrl: 'accounts.html',
 })
 export class AccountsPage {
+  accounts: Account[];
+  accountsChunk: any = [];
 
-  accountsChunk: any =[
-    {
-      title: 'Debito',
-      totalValue: 300,
-      accounts: [
-        {
-          title: 'Debito Ruben',
-          image: '../../assets/imgs/accounts/png/money-1.png',
-          total: 100
-        },{
-          title: 'Debito Sarahi',
-          image: '../../assets/imgs/accounts/png/money-1.png',
-          total: 200
-        },
-      ]
-    },
-    {
-      title: 'Efectivo',
-      totalValue: 300,
-      accounts: [
-        {
-          title: 'Efectivo Ruben',
-          image: '../../assets/imgs/accounts/png/money-1.png',
-          total: 100
-        },{
-          title: 'Efectivo Sarahi',
-          image: '../../assets/imgs/accounts/png/money-1.png',
-          total: 200
-        },
-      ]
-    }
-  ];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private accountProvider: AccountProvider,
+    private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
+    let loading: Loading = this.loadingCtrl.create();
+    loading.present();
 
+    this.accountProvider.getAllAccounts()
+      .subscribe((accounts: Account[]) => {
+        this.accounts = accounts;
+        this.accountsChunk = _.chain(this.accounts)
+          .groupBy((account: Account) => account.type)
+          .map((value: Account[], key: string) => {
+
+            return {
+              title: this.getAccountTypeName(value[0].type),
+              entries: value,
+              totalValue: _.sumBy(value, v => v.currentBalance)
+            };
+          })
+          .value();
+        loading.dismiss();
+      });
+  }
+
+  getAccountTypeName(type): string {
+    switch (type) {
+      case AccountType.Debit:
+        return "Debito";
+      case AccountType.Cash:
+        return "Efectivo";
+      case AccountType.Credit:
+        return "Credito";
+      case AccountType.Savings:
+        return "Ahorros Ruben";
+      case AccountType.SarahiSavings:
+        return "Ahorros Sarahi";
+    }
+    return "";
   }
 
 }

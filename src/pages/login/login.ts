@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Loading, LoadingController, AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '../../../node_modules/@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { TabsPage } from '../tabs/tabs';
 
@@ -41,7 +41,7 @@ export class LoginPage {
       try {
         this.authProvider.loginUser(this.loginForm.value.email,
           this.loginForm.value.password)
-          .then(user => {
+          .then((user: firebase.User) => {
             this.navCtrl.setRoot(TabsPage);
           })
           .catch(error => {

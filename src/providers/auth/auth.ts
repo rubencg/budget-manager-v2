@@ -8,18 +8,18 @@ export class AuthProvider {
 
   }
 
-  loginUser(email:string, password:string):Promise<any>{
+  loginUser(email: string, password: string): Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
-  logoutUser(){
+  logoutUser() {
     return new Promise((resolve, reject) => {
       firebase.auth().signOut()
         .then(() => {
           let loggedOut = true;
           resolve(loggedOut);
         })
-        .catch((error:any) => {
+        .catch((error: any) => {
           reject(error);
         });
     });

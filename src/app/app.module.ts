@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { AccountsPage } from '../pages/accounts/accounts';
 import { StatisticsPage } from '../pages/statistics/statistics';
@@ -12,8 +13,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ComponentsModule } from '../components/components.module';
 import { LoginPage } from '../pages/login/login';
-import { AuthProvider } from '../providers/auth/auth';
-import { AccountProvider } from '../providers/account/account';
+import { ProvidersModule } from '../providers/providers.module';
+import { FIREBASE_CONFIG } from './firebase.config';
+import { AngularFireModule } from '../../node_modules/angularfire2';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { AccountProvider } from '../providers/account/account';
   imports: [
     BrowserModule,
     ComponentsModule,
+    ProvidersModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -42,8 +46,7 @@ import { AccountProvider } from '../providers/account/account';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
-    AccountProvider
+    NativeStorage
   ]
 })
 export class AppModule {}
