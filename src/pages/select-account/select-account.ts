@@ -22,7 +22,6 @@ export class SelectAccountPage {
   ionViewDidLoad() {
     let accounts = this.accountProvider.getAccountsLocal();
     this.elementSelect.loadElements(accounts);
-    // this.elementSelect.loadElements(this.accountProvider.getAccountsLocal());
   }
 
   accountSelected(selectedAccount: Account) {

@@ -23,6 +23,8 @@ import { SelectAccountPageModule } from '../pages/select-account/select-account.
 import { SelectCategoryPage } from '../pages/select-category/select-category';
 import { SelectCategoryPageModule } from '../pages/select-category/select-category.module';
 import { CategoryProvider } from '../providers/category/category';
+import { SelectSubcategoryPage } from '../pages/select-subcategory/select-subcategory';
+import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-subcategory.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { CategoryProvider } from '../providers/category/category';
     EnterQuantityPageModule,
     SelectAccountPageModule,
     SelectCategoryPageModule,
+    SelectSubcategoryPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -53,7 +56,8 @@ import { CategoryProvider } from '../providers/category/category';
     LoginPage,
     EnterQuantityPage,
     SelectAccountPage,
-    SelectCategoryPage
+    SelectCategoryPage,
+    SelectSubcategoryPage
   ],
   providers: [
     StatusBar,

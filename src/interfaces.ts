@@ -65,7 +65,7 @@ export enum AccountType {
 }
 
 export interface Category {
-  $key?: string;
+  key?: string;
   name: string;
   img?: string;
   subcategories?: IdNameBasic[];
