@@ -3,6 +3,7 @@ import { AccountProvider } from './account/account';
 import { AuthProvider } from './auth/auth';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import { CategoryProvider } from './category/category';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { AngularFireModule } from 'angularfire2';
     providers: [
       AccountProvider,
       AuthProvider,
+      CategoryProvider,
       AngularFireDatabase
     ]
 })

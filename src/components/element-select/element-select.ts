@@ -17,7 +17,6 @@ export class ElementSelectComponent {
 
     loadElements(elements: SelectableElement[]) {
         this.elements = elements;
-        console.log(elements);
         
         if (elements) {
             this.elementChunks = _.chain(elements)

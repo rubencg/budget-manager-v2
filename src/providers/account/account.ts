@@ -39,7 +39,7 @@ export class AccountProvider {
   }
 
   updateBalance($key: string, newBalance: number) {
-    this.db.list('/accounts')
+    this.db.list(this.accountsUrl)
       .update($key, {
         currentBalance: newBalance
       });

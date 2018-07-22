@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ElementSelectComponent } from '../../components/element-select/element-select';
+import { CategoryProvider } from '../../providers/category/category';
 
-/**
- * Generated class for the SelectCategoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +10,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'select-category.html',
 })
 export class SelectCategoryPage {
+  @ViewChild('elementSelect') elementSelect: ElementSelectComponent;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private categoryProvider:CategoryProvider) {
   }
 
   ionViewDidLoad() {
-    
+    this.elementSelect.loadElements(this.categoryProvider.getExpenseCategoriesLocal());
   }
 
 }

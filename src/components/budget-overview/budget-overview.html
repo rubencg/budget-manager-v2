@@ -8,7 +8,7 @@
         <img [src]="category.image">
       </ion-avatar>
       {{category.title}}
-      <ion-badge [color]="category.color" item-right>{{ category.currentTotal | currency:'USD':true:'1.2-2' }} de {{ category.currentMax | currency:'USD':true:'1.2-2' }}</ion-badge>
+      <ion-badge [color]="category.color" item-right>{{ category.currentTotal | currency }} de {{ category.currentMax | currency }}</ion-badge>
     </ion-item>
 
   </ion-list>

@@ -4,6 +4,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
 import { AccountProvider } from '../../providers/account/account';
 import { Account } from '../../interfaces';
+import { CategoryProvider } from '../../providers/category/category';
 
 @Component({
   selector: 'page-home',
@@ -12,13 +13,15 @@ import { Account } from '../../interfaces';
 export class HomePage {
 
   constructor(public navCtrl: NavController, private authProvider: AuthProvider, private accountProvider: AccountProvider,
-    private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    private alertCtrl: AlertController, private loadingCtrl: LoadingController, private categoryProvider:CategoryProvider) {
     let loading: Loading = this.loadingCtrl.create();
     loading.present();
 
+    this.categoryProvider.getAllExpenseCategories();
+    this.categoryProvider.getAllIncomeCategories();
     this.accountProvider.getAllAccounts()
       .subscribe((accounts: Account[]) => {
-        loading.dismiss();
+        loading.dismiss();        
       });
 
   }

@@ -20,6 +20,9 @@ import { EnterQuantityPageModule } from '../pages/enter-quantity/enter-quantity.
 import { EnterQuantityPage } from '../pages/enter-quantity/enter-quantity';
 import { SelectAccountPage } from '../pages/select-account/select-account';
 import { SelectAccountPageModule } from '../pages/select-account/select-account.module';
+import { SelectCategoryPage } from '../pages/select-category/select-category';
+import { SelectCategoryPageModule } from '../pages/select-category/select-category.module';
+import { CategoryProvider } from '../providers/category/category';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { SelectAccountPageModule } from '../pages/select-account/select-account.
     ProvidersModule,
     EnterQuantityPageModule,
     SelectAccountPageModule,
+    SelectCategoryPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -48,13 +52,15 @@ import { SelectAccountPageModule } from '../pages/select-account/select-account.
     TabsPage,
     LoginPage,
     EnterQuantityPage,
-    SelectAccountPage
+    SelectAccountPage,
+    SelectCategoryPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    NativeStorage
+    NativeStorage,
+    CategoryProvider
   ]
 })
 export class AppModule {}
