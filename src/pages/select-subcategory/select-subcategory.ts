@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ElementSelectComponent, SelectableElement } from '../../components/element-select/element-select';
 import { Category } from '../../interfaces';
 
-/**
- * Generated class for the SelectSubcategoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-select-subcategory',
