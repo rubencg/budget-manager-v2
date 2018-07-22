@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
+import { AccountProvider } from '../../providers/account/account';
+import { Account } from '../../interfaces';
 
 @Component({
   selector: 'page-home',
@@ -9,8 +11,15 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private authProvider: AuthProvider,
-    private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private authProvider: AuthProvider, private accountProvider: AccountProvider,
+    private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    let loading: Loading = this.loadingCtrl.create();
+    loading.present();
+
+    this.accountProvider.getAllAccounts()
+      .subscribe((accounts: Account[]) => {
+        loading.dismiss();
+      });
 
   }
 

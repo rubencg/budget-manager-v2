@@ -1,0 +1,22 @@
+<ion-grid *ngIf="elementChunks">
+  <ion-row *ngFor="let elementChunk of elementChunks">
+    <ion-col width-33 class="ion-col">
+      <div (click)="elementSelected(elementChunk[0].key)">
+        <img [src]="elementChunk[0].img">
+        <p>{{elementChunk[0].name}}</p>
+      </div>
+    </ion-col>
+    <ion-col width-33 class="ion-col">
+      <div *ngIf="elementChunk[1]" (click)="elementSelected(elementChunk[1].key)">
+        <img [src]="elementChunk[1].img">
+        <p>{{elementChunk[1].name}}</p>
+      </div>
+    </ion-col>
+    <ion-col width-33 class="ion-col">
+      <div *ngIf="elementChunk[2]" (click)="elementSelected(elementChunk[2].key)">
+        <img [src]="elementChunk[2].img">
+        <p>{{elementChunk[2].name}}</p>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

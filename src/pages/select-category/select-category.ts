@@ -19,7 +19,7 @@ export class SelectCategoryPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SelectCategoryPage');
+    
   }
 
 }

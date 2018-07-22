@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { AccountProvider } from '../../providers/account/account';
 import { Account, AccountType } from '../../interfaces';
 import * as _ from 'lodash';
@@ -12,30 +12,22 @@ export class AccountsPage {
   accounts: Account[];
   accountsChunk: any = [];
 
-  constructor(public navCtrl: NavController, private accountProvider: AccountProvider,
-    private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, private accountProvider: AccountProvider) {
   }
 
   ionViewDidLoad() {
-    let loading: Loading = this.loadingCtrl.create();
-    loading.present();
+    this.accounts = this.accountProvider.getAccountsLocal();
+    this.accountsChunk = _.chain(this.accounts)
+      .groupBy((account: Account) => account.type)
+      .map((value: Account[], key: string) => {
 
-    this.accountProvider.getAllAccounts()
-      .subscribe((accounts: Account[]) => {
-        this.accounts = accounts;
-        this.accountsChunk = _.chain(this.accounts)
-          .groupBy((account: Account) => account.type)
-          .map((value: Account[], key: string) => {
-
-            return {
-              title: this.getAccountTypeName(value[0].type),
-              entries: value,
-              totalValue: _.sumBy(value, v => v.currentBalance)
-            };
-          })
-          .value();
-        loading.dismiss();
-      });
+        return {
+          title: this.getAccountTypeName(value[0].type),
+          entries: value,
+          totalValue: _.sumBy(value, v => v.currentBalance)
+        };
+      })
+      .value();    
   }
 
   getAccountTypeName(type): string {

@@ -18,7 +18,7 @@ export class StatisticsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatisticsPage');
+    
   }
 
 }
