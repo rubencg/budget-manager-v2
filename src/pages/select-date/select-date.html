@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Fecha y notas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list inset>
+    <ion-item class="text-center" text-center>
+      <span class="date" (click)="showDatePicker()">
+        {{date | date:'dd/MMM/yyyy'}}
+      </span>
+      <!--<ion-datetime center displayFormat="DDD DD/MMMM/YYYY" [(ngModel)]="date"
+        pickerFormat="DDD DD MMMM YYYY"
+        dayShortNames="Dom,Lun,Mar,Mie,Jue,Vie,Sab"
+        monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+        ></ion-datetime>-->
+
+    </ion-item>
+    <ion-item>
+      <ion-textarea rows="6" [(ngModel)]="notes" placeholder="Notes..."></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <button ion-button full color="secondary" (click)="saveExpense()">Guardar</button>
+</ion-content>

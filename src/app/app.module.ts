@@ -25,6 +25,8 @@ import { SelectCategoryPageModule } from '../pages/select-category/select-catego
 import { CategoryProvider } from '../providers/category/category';
 import { SelectSubcategoryPage } from '../pages/select-subcategory/select-subcategory';
 import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-subcategory.module';
+import { SelectDatePage } from '../pages/select-date/select-date';
+import { SelectDatePageModule } from '../pages/select-date/select-date.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-
     SelectAccountPageModule,
     SelectCategoryPageModule,
     SelectSubcategoryPageModule,
+    SelectDatePageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -57,7 +60,8 @@ import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-
     EnterQuantityPage,
     SelectAccountPage,
     SelectCategoryPage,
-    SelectSubcategoryPage
+    SelectSubcategoryPage,
+    SelectDatePage
   ],
   providers: [
     StatusBar,

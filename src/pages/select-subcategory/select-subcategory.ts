@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ElementSelectComponent, SelectableElement } from '../../components/element-select/element-select';
-import { Category } from '../../interfaces';
+import { Category, IdNameBasic } from '../../interfaces';
+import _ from 'lodash';
+import { SelectDatePage } from '../select-date/select-date';
 
 @IonicPage()
 @Component({
@@ -33,6 +35,20 @@ export class SelectSubcategoryPage {
 
         this.elementSelect.loadElements(this.subcategories);
     }
+  }
+
+  subcategorySelected(subcategory: SelectableElement){
+    let selectedSubcategory: IdNameBasic = _.chain(this.category.subcategories)
+        .filter((c: IdNameBasic) => c.id == subcategory.key)
+        .value()[0];
+
+    this.navCtrl.push(SelectDatePage, {
+      result: this.navParams.get('result'),
+      entryType: this.navParams.get('entryType'),
+      account: this.navParams.get('account'),
+      category: this.navParams.get('category'),
+      subcategory: selectedSubcategory
+    });
   }
 
 }
