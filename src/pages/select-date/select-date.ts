@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SelectDatePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, LoadingController, Loading, AlertController, ToastController } from 'ionic-angular';
+import { DatePicker } from '@ionic-native/date-picker';
+import * as moment from 'moment';
+import { Expense, EntryType, Category, IdNameBasic, CategoryBasic, Account } from '../../interfaces';
+import { ExpenseProvider } from '../../providers/expense/expense';
 
 @IonicPage()
 @Component({
@@ -14,12 +11,124 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'select-date.html',
 })
 export class SelectDatePage {
+  result: number;
+  notes: string;
+  entryType: EntryType;
+  date: Date = moment().toDate();
+  title: string;
+  loadingScreen: Loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker,
+    private loadingCtrl: LoadingController, private alertCtrl: AlertController,
+    private expenseProvider:ExpenseProvider, private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SelectDatePage');
+    this.notes = "";
+    this.result = this.navParams.get('result');
+    this.entryType = this.navParams.get('entryType');
+    this.loadingScreen = this.loadingCtrl.create({
+      content: 'Guardando...'
+    });
+  }
+
+  saveEntry(): void {
+    this.loadingScreen.present();
+    if (this.entryType == EntryType.Expense && moment(this.date).isAfter(new Date())) {
+      this.showAlert("La fecha de un gasto no puede ser mayor a la de hoy. ¿Quieres agregar un gasto presupuestado acaso?")
+      return;
+    }
+
+    let paramCategory: Category = this.navParams.get("category");
+    let paramSubCategory: IdNameBasic = this.navParams.get("subcategory");
+    let paramAccount: Account = this.navParams.get("account");
+
+    let subcategory;
+    if (paramSubCategory) {
+      subcategory = {
+        id: paramSubCategory.id,
+        name: paramSubCategory.name,
+        img: paramSubCategory.img
+      };
+    }
+
+    let category: CategoryBasic = {
+      id: paramCategory.key.toString(),
+      name: paramCategory.name,
+      subcategory: subcategory,
+      img: paramCategory.img
+    };
+
+    let account: IdNameBasic;
+    if (paramAccount) {
+      account = {
+        id: paramAccount.key,
+        name: paramAccount.name,
+        img: paramAccount.img
+      };
+    }
+    let momentDate = moment(this.date);
+
+    let e: Expense = {
+      amount: +this.navParams.data.result,
+      category: category,
+      date: momentDate.format('x'),
+      fromAccount: account,
+      notes: this.notes
+    };
+
+    this.navCtrl.popToRoot()
+      .then(() => {
+        this.expenseProvider.saveExpense(e)
+          .then(() => {
+            this.close();
+          });
+      });
+  }
+
+  close(){
+    this.loadingScreen.dismiss();
+    this.presentToast("Elemento guardado");
+  }
+
+  presentToast(msg: string) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.present();
+  }
+
+  showDatePicker() {
+    this.datePicker.show({
+      date: this.date,
+      mode: 'date',
+      androidTheme: 4
+    }).then(
+      date => { this.date = date; },
+      err => console.log('Error occurred while getting date: ', err)
+    );
+  }
+
+  showAlert(message: string) {
+    let alert = this.alertCtrl.create({
+      title: 'Error!',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Si, cambiar',
+          handler: data => {
+            this.entryType = EntryType.BudgetExpense;
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

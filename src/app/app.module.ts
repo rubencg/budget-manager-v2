@@ -27,6 +27,8 @@ import { SelectSubcategoryPage } from '../pages/select-subcategory/select-subcat
 import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-subcategory.module';
 import { SelectDatePage } from '../pages/select-date/select-date';
 import { SelectDatePageModule } from '../pages/select-date/select-date.module';
+import { DatePicker } from '../../node_modules/@ionic-native/date-picker';
+import { ExpenseProvider } from '../providers/expense/expense';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { SelectDatePageModule } from '../pages/select-date/select-date.module';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NativeStorage,
-    CategoryProvider
+    CategoryProvider,
+    DatePicker,
+    ExpenseProvider
   ]
 })
 export class AppModule {}

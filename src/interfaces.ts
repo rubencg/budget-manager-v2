@@ -1,12 +1,12 @@
 export interface Entry {
-  $key?: string;
+  key?: string;
   date: string;
   amount: number;
   notes?: string;
 }
 
 export interface Account {
-  $key?: string;
+  key?: string;
   currentBalance: number;
   name: string;
   isSummable?: boolean;
@@ -30,7 +30,7 @@ export interface BudgetExpense extends Entry {
 }
 
 export interface Transfer {
-  $key?: string;
+  key?: string;
   fromAccount: IdNameBasic;
   toAccount: IdNameBasic;
   amount: number;

@@ -34,13 +34,13 @@ export class AccountProvider {
 
   getAccountById(id: string): Account {
     return _.chain(this.accounts)
-      .filter((a: Account) => a.$key == id)
+      .filter((a: Account) => a.key == id)
       .value()[0];
   }
 
-  updateBalance($key: string, newBalance: number) {
+  updateBalance(key: string, newBalance: number) {
     this.db.list(this.accountsUrl)
-      .update($key, {
+      .update(key, {
         currentBalance: newBalance
       });
   }
