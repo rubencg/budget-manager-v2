@@ -1,6 +1,5 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
@@ -10,15 +9,9 @@ import { AccountProvider } from '../account/account';
 @Injectable()
 export class ExpenseProvider {
   private expensesUrl: string;
-  private expenseRef: Observable<any[]>;
-  accounts: Expense[];
 
   constructor(private db: AngularFireDatabase, private accountProvider: AccountProvider) {
     this.expensesUrl = 'expenses/';
-
-    this.expenseRef = db.list(this.expensesUrl).snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
   }
 
   saveExpense(expense: Expense): firebase.database.ThenableReference {

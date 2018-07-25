@@ -5,6 +5,7 @@ import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/dat
 import { AngularFireModule } from 'angularfire2';
 import { CategoryProvider } from './category/category';
 import { ExpenseProvider } from './expense/expense';
+import { EntryProvider } from './entry/entry';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ExpenseProvider } from './expense/expense';
       AuthProvider,
       CategoryProvider,
       AngularFireDatabase,
-      ExpenseProvider
+      ExpenseProvider,
+      EntryProvider
     ]
 })
 export class ProvidersModule {
