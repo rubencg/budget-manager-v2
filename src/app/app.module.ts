@@ -32,6 +32,8 @@ import { ExpenseProvider } from '../providers/expense/expense';
 import { EntryProvider } from '../providers/entry/entry';
 import { IncomeProvider } from '../providers/income/income';
 import { BudgetExpenseProvider } from '../providers/budget-expense/budget-expense';
+import { ExpensesPageModule } from '../pages/expenses/expenses.module';
+import { ExpensesPage } from '../pages/expenses/expenses';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { BudgetExpenseProvider } from '../providers/budget-expense/budget-expens
     SelectCategoryPageModule,
     SelectSubcategoryPageModule,
     SelectDatePageModule,
+    ExpensesPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -66,7 +69,8 @@ import { BudgetExpenseProvider } from '../providers/budget-expense/budget-expens
     SelectAccountPage,
     SelectCategoryPage,
     SelectSubcategoryPage,
-    SelectDatePage
+    SelectDatePage,
+    ExpensesPage
   ],
   providers: [
     StatusBar,

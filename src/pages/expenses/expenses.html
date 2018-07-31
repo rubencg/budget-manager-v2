@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{title | titlecase}}</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="previous()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="next()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+    <entry-list #expensesList id="expensesList" (elementSelected)="expenseSelected($event)" [options]="expenseOptions" [changingDate]="date"></entry-list>
+</ion-content>

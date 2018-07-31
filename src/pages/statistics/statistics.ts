@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the StatisticsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ExpensesPage } from '../expenses/expenses';
 
 @Component({
   selector: 'page-statistics',
@@ -18,7 +12,11 @@ export class StatisticsPage {
   }
 
   ionViewDidLoad() {
-    
+
+  }
+
+  showExpenses(){
+    this.navCtrl.push(ExpensesPage);
   }
 
 }
