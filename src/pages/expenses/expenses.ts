@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { EntryListComponent, EntryListOptions } from '../../components/entry-list/entry-list';
 import { Expense } from '../../interfaces';
 import { ExpenseProvider } from '../../providers/expense/expense';

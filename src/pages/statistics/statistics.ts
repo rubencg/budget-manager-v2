@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ExpensesPage } from '../expenses/expenses';
+import { IncomesPage } from '../incomes/incomes';
+import { BudgetExpensesPage } from '../budget-expenses/budget-expenses';
 
 @Component({
   selector: 'page-statistics',
@@ -17,6 +19,14 @@ export class StatisticsPage {
 
   showExpenses(){
     this.navCtrl.push(ExpensesPage);
+  }
+
+  showIncomes(){
+    this.navCtrl.push(IncomesPage);
+  }
+
+  showBudgetExpenses(){
+    this.navCtrl.push(BudgetExpensesPage);
   }
 
 }
