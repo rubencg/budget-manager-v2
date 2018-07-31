@@ -16,7 +16,19 @@ export class AddEntryComponent {
   addExpense(){
     this.nav.push(EnterQuantityPage,{
       entryType: EntryType.Expense
-    })
+    });
+  }
+
+  addIncome(){
+    this.nav.push(EnterQuantityPage,{
+      entryType: EntryType.Income
+    });
+  }
+
+  addBudgetExpense(){
+    this.nav.push(EnterQuantityPage,{
+      entryType: EntryType.BudgetExpense
+    });
   }
 
 }

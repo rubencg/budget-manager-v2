@@ -6,6 +6,8 @@ import { AngularFireModule } from 'angularfire2';
 import { CategoryProvider } from './category/category';
 import { ExpenseProvider } from './expense/expense';
 import { EntryProvider } from './entry/entry';
+import { IncomeProvider } from './income/income';
+import { BudgetExpenseProvider } from './budget-expense/budget-expense';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { EntryProvider } from './entry/entry';
       CategoryProvider,
       AngularFireDatabase,
       ExpenseProvider,
-      EntryProvider
+      EntryProvider,
+      IncomeProvider,
+      BudgetExpenseProvider
     ]
 })
 export class ProvidersModule {

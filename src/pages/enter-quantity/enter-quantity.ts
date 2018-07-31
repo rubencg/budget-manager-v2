@@ -1,14 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { SelectAccountPage } from '../select-account/select-account';
 import { CalculatorComponent } from '../../components/calculator/calculator';
-
-/**
- * Generated class for the EnterQuantityPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { EntryType } from '../../interfaces';
+import { SelectCategoryPage } from '../select-category/select-category';
 
 @IonicPage()
 @Component({
@@ -18,7 +13,8 @@ import { CalculatorComponent } from '../../components/calculator/calculator';
 export class EnterQuantityPage {
   @ViewChild('calculator') calculator: CalculatorComponent;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -27,13 +23,34 @@ export class EnterQuantityPage {
 
   saveAmount(){
     let result: number = this.calculator.getResult();
+    let entryType: EntryType = this.navParams.get('entryType');
+    let goToPage: any;
 
-    // ToDo: Validate result
+    if(result <= 0){
+      this.presentToast("Valor tiene que ser mayor a 0");
+      return;
+    }
 
-    this.navCtrl.push(SelectAccountPage, {
+    if(entryType == EntryType.BudgetExpense){
+      goToPage = SelectCategoryPage;
+    }else{
+      goToPage = SelectAccountPage;
+    }
+
+    this.navCtrl.push(goToPage, {
       result: result,
-      entryType: this.navParams.get('entryType')
+      entryType: entryType
     });
+  }
+
+  presentToast(msg: string) {
+    let toast = this.toastCtrl.create({
+      duration: 3000,
+      message: msg,
+      position: 'bottom'
+    });
+
+    toast.present();
   }
 
 }

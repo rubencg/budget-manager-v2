@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, Loading, AlertController, ToastController } from 'ionic-angular';
 import { DatePicker } from '@ionic-native/date-picker';
 import * as moment from 'moment';
-import { Expense, EntryType, Category, IdNameBasic, CategoryBasic, Account } from '../../interfaces';
+import { Expense, EntryType, Category, IdNameBasic, CategoryBasic, Account, Income, BudgetExpense } from '../../interfaces';
 import { ExpenseProvider } from '../../providers/expense/expense';
+import { IncomeProvider } from '../../providers/income/income';
+import { BudgetExpenseProvider } from '../../providers/budget-expense/budget-expense';
 
 @IonicPage()
 @Component({
@@ -14,13 +16,14 @@ export class SelectDatePage {
   result: number;
   notes: string;
   entryType: EntryType;
-  date: Date = moment().toDate();
+  date: Date = moment().add(10,'days').toDate();
   title: string;
   loadingScreen: Loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker,
     private loadingCtrl: LoadingController, private alertCtrl: AlertController,
-    private expenseProvider:ExpenseProvider, private toastCtrl: ToastController) {
+    private expenseProvider: ExpenseProvider, private toastCtrl: ToastController,
+    private incomeProvider: IncomeProvider, private budgetExpenseProvider: BudgetExpenseProvider) {
   }
 
   ionViewDidLoad() {
@@ -69,24 +72,65 @@ export class SelectDatePage {
     }
     let momentDate = moment(this.date);
 
-    let e: Expense = {
-      amount: +this.navParams.data.result,
-      category: category,
-      date: momentDate.format('x'),
-      fromAccount: account,
-      notes: this.notes
-    };
+    if (this.entryType == EntryType.Income) {
+      let i: Income = {
+        amount: +this.navParams.data.result,
+        category: {
+          id: paramCategory.key.toString(),
+          name: paramCategory.name,
+          subcategory: null,
+          img: paramCategory.img
+        },
+        date: momentDate.format('x'),
+        toAccount: account,
+        notes: this.notes,
+        isApplied: false
+      };
 
-    this.navCtrl.popToRoot()
-      .then(() => {
-        this.expenseProvider.saveExpense(e)
-          .then(() => {
-            this.close();
-          });
-      });
+      this.navCtrl.popToRoot()
+        .then(() => {
+          this.incomeProvider.saveIncome(i)
+            .then(() => {
+              this.close();
+            });
+        });
+    } else if (this.entryType == EntryType.BudgetExpense) {
+      let e: BudgetExpense = {
+        amount: +this.navParams.data.result,
+        category: category,
+        date: momentDate.format('x'),
+        notes: this.notes
+      }
+
+      this.navCtrl.popToRoot()
+        .then(() => {
+          this.budgetExpenseProvider.saveBudgetExpense(e)
+            .then(() => {
+              this.close();
+            });
+        });
+    } else {
+      let e: Expense = {
+        amount: +this.navParams.data.result,
+        category: category,
+        date: momentDate.format('x'),
+        fromAccount: account,
+        notes: this.notes
+      };
+
+      this.navCtrl.popToRoot()
+        .then(() => {
+          this.expenseProvider.saveExpense(e)
+            .then(() => {
+              this.close();
+            });
+        });
+    }
+
+
   }
 
-  close(){
+  close() {
     this.loadingScreen.dismiss();
     this.presentToast("Elemento guardado");
   }

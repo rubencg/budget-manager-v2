@@ -30,6 +30,8 @@ import { SelectDatePageModule } from '../pages/select-date/select-date.module';
 import { DatePicker } from '../../node_modules/@ionic-native/date-picker';
 import { ExpenseProvider } from '../providers/expense/expense';
 import { EntryProvider } from '../providers/entry/entry';
+import { IncomeProvider } from '../providers/income/income';
+import { BudgetExpenseProvider } from '../providers/budget-expense/budget-expense';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { EntryProvider } from '../providers/entry/entry';
     CategoryProvider,
     DatePicker,
     ExpenseProvider,
-    EntryProvider
+    EntryProvider,
+    IncomeProvider,
+    BudgetExpenseProvider
   ]
 })
 export class AppModule {}

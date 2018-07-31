@@ -1,0 +1,91 @@
+import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AccountProvider } from '../account/account';
+import _ from 'lodash';
+import moment from 'moment';
+import { Income, Account } from '../../interfaces';
+
+@Injectable()
+export class IncomeProvider {
+  private incomesUrl: string;
+  private incomes;
+
+  constructor(private db: AngularFireDatabase, private accountProvider: AccountProvider) {
+    this.incomesUrl = 'incomes/';
+    this.incomes = this.db.list(this.incomesUrl);
+  }
+
+
+  saveIncome(income: Income): firebase.database.ThenableReference {
+    let date: Date = new Date(+income.date);
+
+    income.isApplied = moment(date).isSameOrBefore(moment(new Date()), 'day');
+    let incomeReturn = this.incomes.push(income);
+
+    incomeReturn
+      .then(() => {
+
+        if (income.isApplied) {
+          let account: Account = _.chain(this.accountProvider.getAccountsLocal())
+            .filter((a: Account) => a.key == income.toAccount.id)
+            .value()[0];
+
+          if (account) {
+            let newBalance: number = account.currentBalance + income.amount;
+            this.accountProvider.updateBalance(account.key, newBalance);
+          }
+          return;
+        }
+      });
+    return incomeReturn;
+  }
+
+  applyIncomesOfTheDay(incomes: Income[], accounts: Account[]) {
+    incomes.forEach(income => {
+      let account: Account = _.chain(accounts)
+        .filter((a: Account) => a.key == income.toAccount.id)
+        .value()[0];
+
+      if (account) {
+        let newBalance: number = account.currentBalance + income.amount;
+        this.accountProvider.updateBalance(account.key, newBalance);
+        this.incomes
+          .update(income.key, {
+            isApplied: true
+          });
+      }
+    });
+  }
+
+  deleteIncome(income: Income): firebase.database.ThenableReference {
+    let promise = this.incomes.remove(income.key);
+
+    promise.then(() => {
+      let account: Account = _.chain(this.accountProvider.getAccountsLocal())
+        .filter((a: Account) => a.key == income.toAccount.id)
+        .value()[0];
+
+      if (account) {
+        let newBalance: number = account.currentBalance - income.amount;
+        this.accountProvider.updateBalance(account.key, newBalance);
+      }
+    });
+
+    return promise;
+  }
+
+  updateIncome($key: string, income: Income): firebase.database.ThenableReference {
+    return this.incomes
+      .update($key, {
+        amount: income.amount,
+        date: income.date,
+        notes: income.notes,
+        category: income.category,
+        toAccount: {
+          id: income.toAccount.id,
+          name: income.toAccount.name,
+          img: income.toAccount.img
+        }
+      });
+  }
+}
