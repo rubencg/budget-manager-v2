@@ -47,7 +47,7 @@ export class EntryListComponent<T extends Entry> {
   callAndReload(entry: T, callbackMethod: (t: T) => Promise<void>) {
     callbackMethod(entry)
       .then(() => {
-        this.setEntries(this.entryOptions.currentDate);
+        this.setEntries(this.entryOptions.currentDate, this.entryOptions.getEntries());
       });
   }
 
