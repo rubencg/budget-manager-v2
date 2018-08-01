@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{title | titlecase}}</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="previous()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="next()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-item-group *ngFor="let expense of groupedExpenses">
+    <ion-item-divider color="light" (click)="activate(expense)">
+      <ion-icon [name]="expense.isActive ? 'remove' : 'add'" item-left></ion-icon>
+      <ion-avatar item-left>
+        <img [src]="expense.img">
+      </ion-avatar>
+      {{expense.name | titlecase}}
+      <ion-badge item-right>{{expense.amount | currency:'USD':true:'1.2-2' }}</ion-badge>
+    </ion-item-divider>
+    <ion-list *ngIf="expense.isActive">
+      <ion-item *ngFor="let entry of expense.data">
+        <ion-avatar item-left>
+          <img [src]="entry.category.subcategory.img">
+        </ion-avatar>
+        <h2>{{entry.category.subcategory.name}}</h2>
+        <p class="account">{{entry.fromAccount.name}}</p>
+        <p>{{entry?.notes}}</p>
+        <ion-badge item-right>{{entry.amount | currency:'USD':true:'1.2-2' }}</ion-badge>
+      </ion-item>
+    </ion-list>
+  </ion-item-group>
+</ion-content>

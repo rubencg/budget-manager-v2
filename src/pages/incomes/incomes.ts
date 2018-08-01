@@ -48,6 +48,10 @@ export class IncomesPage {
     getImage: (income: Income) => income.category.img
   };
 
+  incomeSelected(income: Income): void{
+
+  }
+
   ionViewDidLoad() {
     let month: number = moment(new Date()).month();
     let year: number = moment(new Date()).year();

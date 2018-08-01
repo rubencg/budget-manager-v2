@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ExpensesPage } from '../expenses/expenses';
 import { IncomesPage } from '../incomes/incomes';
 import { BudgetExpensesPage } from '../budget-expenses/budget-expenses';
+import { CategoryExpensesPage } from '../category-expenses/category-expenses';
 
 @Component({
   selector: 'page-statistics',
@@ -27,6 +28,10 @@ export class StatisticsPage {
 
   showBudgetExpenses(){
     this.navCtrl.push(BudgetExpensesPage);
+  }
+
+  showExpensesByCategory(){
+    this.navCtrl.push(CategoryExpensesPage);
   }
 
 }

@@ -91,6 +91,10 @@ export class BudgetExpensesPage {
     }
   };
 
+  budgetExpenseSelected(budgetExpense: BudgetExpense): void{
+
+  }
+
   ionViewDidLoad() {
     let month: number = moment(new Date()).month();
     let year: number = moment(new Date()).year();

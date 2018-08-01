@@ -9,12 +9,6 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/imgs/statistics/png/001-bar-chart.png">
-      </ion-avatar>
-      <h2>Estadisticas</h2>
-    </ion-item>
     <ion-item (click)="showBudgetExpenses()">
       <ion-avatar item-start>
         <img src="assets/imgs/statistics/png/002-calendar.png">
@@ -32,6 +26,12 @@
         <img src="assets/imgs/statistics/png/004-add.png">
       </ion-avatar>
       <h2>Ingresos</h2>
+    </ion-item>
+    <ion-item (click)="showExpensesByCategory()">
+      <ion-avatar item-start>
+        <img src="assets/imgs/statistics/png/001-bar-chart.png">
+      </ion-avatar>
+      <h2>Gastos por categoria</h2>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -54,7 +54,9 @@ export class ExpensesPage {
     }
   };
 
+  expenseSelected(expense: Expense): void{
 
+  }
 
   ionViewDidLoad() {
     let month: number = moment(new Date()).month();
