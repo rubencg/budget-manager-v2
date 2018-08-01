@@ -40,6 +40,8 @@ import { BudgetExpensesPageModule } from '../pages/budget-expenses/budget-expens
 import { BudgetExpensesPage } from '../pages/budget-expenses/budget-expenses';
 import { CategoryExpensesPageModule } from '../pages/category-expenses/category-expenses.module';
 import { CategoryExpensesPage } from '../pages/category-expenses/category-expenses';
+import { ExpensesByCategoryPage } from '../pages/expenses-by-category/expenses-by-category';
+import { ExpensesByCategoryPageModule } from '../pages/expenses-by-category/expenses-by-category.module';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { CategoryExpensesPage } from '../pages/category-expenses/category-expens
     IncomesPageModule,
     BudgetExpensesPageModule,
     CategoryExpensesPageModule,
+    ExpensesByCategoryPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -82,7 +85,8 @@ import { CategoryExpensesPage } from '../pages/category-expenses/category-expens
     ExpensesPage,
     IncomesPage,
     BudgetExpensesPage,
-    CategoryExpensesPage
+    CategoryExpensesPage,
+    ExpensesByCategoryPage
   ],
   providers: [
     StatusBar,

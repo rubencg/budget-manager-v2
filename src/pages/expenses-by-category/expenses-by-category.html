@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{title | titlecase}}</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="previous()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="next()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div [ngSwitch]="entryType">
+    <!-- Starts Expenses -->
+    <entry-list #expensesList id="expensesList" (elementSelected)="expenseSelected($event)" [options]="expenseOptions" *ngSwitchCase="'1'"
+      [changingDate]="date"></entry-list>
+    <!-- Starts Incomes -->
+    <entry-list #incomesList id="incomesList" (elementSelected)="incomeSelected($event)" [options]="incomeOptions" *ngSwitchCase="'2'"
+      [changingDate]="date"></entry-list>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="entryType" (ionChange)="segmentChanged()">
+      <ion-segment-button value="1">
+        Gastos
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Entradas
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AccountProvider } from '../../providers/account/account';
 import { Account, AccountType } from '../../interfaces';
 import * as _ from 'lodash';
+import { ExpensesByCategoryPage } from '../expenses-by-category/expenses-by-category';
 
 @Component({
   selector: 'page-accounts',
@@ -27,7 +28,13 @@ export class AccountsPage {
           totalValue: _.sumBy(value, v => v.currentBalance)
         };
       })
-      .value();    
+      .value();
+  }
+
+  accountSelected(account: Account){
+    this.navCtrl.push(ExpensesByCategoryPage, {
+      account: account
+    });
   }
 
   getAccountTypeName(type): string {
