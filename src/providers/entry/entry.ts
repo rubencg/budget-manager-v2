@@ -1,7 +1,6 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import { Expense, BudgetExpense, Income } from '../../interfaces';

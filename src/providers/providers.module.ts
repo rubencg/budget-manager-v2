@@ -8,6 +8,7 @@ import { ExpenseProvider } from './expense/expense';
 import { EntryProvider } from './entry/entry';
 import { IncomeProvider } from './income/income';
 import { BudgetExpenseProvider } from './budget-expense/budget-expense';
+import { TransferProvider } from './transfer/transfer';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { BudgetExpenseProvider } from './budget-expense/budget-expense';
       ExpenseProvider,
       EntryProvider,
       IncomeProvider,
-      BudgetExpenseProvider
+      BudgetExpenseProvider,
+      TransferProvider
     ]
 })
 export class ProvidersModule {

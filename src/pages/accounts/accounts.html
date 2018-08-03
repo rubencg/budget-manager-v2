@@ -1,32 +1,32 @@
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Cuentas</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="md-repeat"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar color="primary">
+      <ion-title>Cuentas</ion-title>
+      <ion-buttons end>
+      <button ion-button icon-only (click)="transfer()">
+          <ion-icon name="md-repeat"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
 
-</ion-header>
+  </ion-header>
 
 
-<ion-content>
-  <ion-item-group *ngFor="let group of accountsChunk" >
-    <ion-item-divider color="light" >
-        {{group.title}}
-        <ion-badge color="primary" item-right>{{group.totalValue | currency }}</ion-badge>
-    </ion-item-divider>
-    <ion-list>
-        <ion-item *ngFor="let entry of group.entries" (click)="accountSelected(entry)">
-            <ion-avatar item-left>
-                <img [src]="entry.img">
-            </ion-avatar>
-            {{entry.name}}
-            <ion-badge color="primary" item-right>{{ entry.currentBalance | currency }}</ion-badge>
-        </ion-item>
+  <ion-content>
+    <ion-item-group *ngFor="let group of accountsChunk" >
+      <ion-item-divider color="light" >
+          {{group.title}}
+          <ion-badge color="primary" item-right>{{group.totalValue | currency }}</ion-badge>
+      </ion-item-divider>
+      <ion-list>
+          <ion-item *ngFor="let entry of group.entries" (click)="accountSelected(entry)">
+              <ion-avatar item-left>
+                  <img [src]="entry.img">
+              </ion-avatar>
+              {{entry.name}}
+              <ion-badge color="primary" item-right>{{ entry.currentBalance | currency }}</ion-badge>
+          </ion-item>
 
-    </ion-list>
-</ion-item-group>
-</ion-content>
+      </ion-list>
+  </ion-item-group>
+  </ion-content>

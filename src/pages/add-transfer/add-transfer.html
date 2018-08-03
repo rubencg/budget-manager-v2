@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+      <ion-title>Transferencia</ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="cancel()">
+          <span ion-text color="light">Cancelar</span>
+        </button>
+      </ion-buttons>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="save()">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+  </ion-header>
+
+
+  <ion-content padding>
+      <div class="amount" (click)="editAmount(amount)">
+          {{ amount | currency:'USD':true:'1.2-2' }}
+      </div>
+      <ion-list>
+        <ion-item>
+          <h2>Origen:</h2>
+          <p *ngIf="!originAccount">
+            <button ion-button block outline (click)="editFromAccount()">
+              {{ originAccount ? originAccount.name : "Selecciona cuenta" }}
+            </button>
+          </p>
+          <button ion-item *ngIf="originAccount" (click)="editFromAccount()">
+            <ion-thumbnail item-left>
+              <img [src]="originAccount.img">
+            </ion-thumbnail>
+            {{ originAccount.name }}
+          </button>
+        </ion-item>
+
+        <ion-item>
+          <h2>Destino:</h2>
+          <p *ngIf="!destinationAccount">
+            <button ion-button block outline (click)="editToAccount()">
+              {{ destinationAccount ? destinationAccount.name : "Selecciona cuenta" }}
+            </button>
+          </p>
+          <button ion-item *ngIf="destinationAccount" (click)="editToAccount()">
+            <ion-thumbnail item-left>
+              <img [src]="destinationAccount.img">
+            </ion-thumbnail>
+            {{ destinationAccount.name }}
+          </button>
+        </ion-item>
+      </ion-list>
+
+      <!--<ion-footer>
+        <button color="secondary" ion-button full>{{dateString}}</button>
+      </ion-footer>-->
+  </ion-content>

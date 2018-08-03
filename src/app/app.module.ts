@@ -42,11 +42,14 @@ import { CategoryExpensesPageModule } from '../pages/category-expenses/category-
 import { CategoryExpensesPage } from '../pages/category-expenses/category-expenses';
 import { ExpensesByCategoryPage } from '../pages/expenses-by-category/expenses-by-category';
 import { ExpensesByCategoryPageModule } from '../pages/expenses-by-category/expenses-by-category.module';
+import { TransferProvider } from '../providers/transfer/transfer';
+import { AddTransferPageModule } from '../pages/add-transfer/add-transfer.module';
+import { AddTransferPage } from '../pages/add-transfer/add-transfer';
+import { AccountsPageModule } from '../pages/accounts/accounts.module';
 
 @NgModule({
   declarations: [
     MyApp,
-    AccountsPage,
     StatisticsPage,
     HomePage,
     TabsPage,
@@ -66,6 +69,8 @@ import { ExpensesByCategoryPageModule } from '../pages/expenses-by-category/expe
     BudgetExpensesPageModule,
     CategoryExpensesPageModule,
     ExpensesByCategoryPageModule,
+    AddTransferPageModule,
+    AccountsPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -86,7 +91,8 @@ import { ExpensesByCategoryPageModule } from '../pages/expenses-by-category/expe
     IncomesPage,
     BudgetExpensesPage,
     CategoryExpensesPage,
-    ExpensesByCategoryPage
+    ExpensesByCategoryPage,
+    AddTransferPage
   ],
   providers: [
     StatusBar,
@@ -98,7 +104,8 @@ import { ExpensesByCategoryPageModule } from '../pages/expenses-by-category/expe
     ExpenseProvider,
     EntryProvider,
     IncomeProvider,
-    BudgetExpenseProvider
+    BudgetExpenseProvider,
+    TransferProvider
   ]
 })
 export class AppModule {}

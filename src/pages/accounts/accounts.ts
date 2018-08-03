@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AccountProvider } from '../../providers/account/account';
 import { Account, AccountType } from '../../interfaces';
 import * as _ from 'lodash';
+import moment from 'moment';
 import { ExpensesByCategoryPage } from '../expenses-by-category/expenses-by-category';
+import { TransferProvider } from '../../providers/transfer/transfer';
+import { AddTransferPage } from '../add-transfer/add-transfer';
 
 @Component({
   selector: 'page-accounts',
@@ -13,7 +16,8 @@ export class AccountsPage {
   accounts: Account[];
   accountsChunk: any = [];
 
-  constructor(public navCtrl: NavController, private accountProvider: AccountProvider) {
+  constructor(public navCtrl: NavController, private accountProvider: AccountProvider,
+    private modalCtrl: ModalController, private transferProvider: TransferProvider) {
   }
 
   ionViewDidLoad() {
@@ -53,4 +57,42 @@ export class AccountsPage {
     return "";
   }
 
+  transfer(){
+    let modal = this.modalCtrl.create(AddTransferPage);
+
+    modal.onDidDismiss((data: TransferData) => {
+      if(data){
+        let newOriginBalance: number = data.originAccount.currentBalance - data.amount;
+        this.accountProvider.updateBalance(data.originAccount.key, newOriginBalance);
+
+        let newDestinationBalance: number = data.destinationAccount.currentBalance + data.amount;
+        this.accountProvider.updateBalance(data.destinationAccount.key, newDestinationBalance);
+
+        this.transferProvider.saveTransfer({
+          amount: data.amount,
+          date: moment(new Date()).format('x'),
+          fromAccount: {
+            id: data.originAccount.key,
+            img: data.originAccount.img,
+            name: data.originAccount.name
+          },
+          toAccount: {
+            id: data.destinationAccount.key,
+            img: data.destinationAccount.img,
+            name: data.destinationAccount.name
+          }
+        })
+      }
+    });
+
+    modal.present();
+
+  }
+
+}
+
+interface TransferData{
+  originAccount: Account;
+  destinationAccount: Account;
+  amount: number;
 }
