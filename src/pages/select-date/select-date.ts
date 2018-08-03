@@ -16,7 +16,7 @@ export class SelectDatePage {
   result: number;
   notes: string;
   entryType: EntryType;
-  date: Date = moment().add(10,'days').toDate();
+  date: Date = moment().toDate();
   title: string;
   loadingScreen: Loading;
 
@@ -38,7 +38,8 @@ export class SelectDatePage {
   saveEntry(): void {
     this.loadingScreen.present();
     if (this.entryType == EntryType.Expense && moment(this.date).isAfter(new Date())) {
-      this.showAlert("La fecha de un gasto no puede ser mayor a la de hoy. ¿Quieres agregar un gasto presupuestado acaso?")
+      this.showAlert("La fecha de un gasto no puede ser mayor a la de hoy. ¿Quieres agregar un gasto presupuestado acaso?");
+
       return;
     }
 
@@ -162,7 +163,10 @@ export class SelectDatePage {
       message: message,
       buttons: [
         {
-          text: 'Cancelar'
+          text: 'Cancelar',
+          handler: data => {
+            this.loadingScreen.dismiss();
+          }
         },
         {
           text: 'Si, cambiar',
