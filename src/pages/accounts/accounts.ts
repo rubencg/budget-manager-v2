@@ -7,6 +7,7 @@ import moment from 'moment';
 import { ExpensesByCategoryPage } from '../expenses-by-category/expenses-by-category';
 import { TransferProvider } from '../../providers/transfer/transfer';
 import { AddTransferPage } from '../add-transfer/add-transfer';
+import { initDomAdapter } from '../../../node_modules/@angular/platform-browser/src/browser';
 
 @Component({
   selector: 'page-accounts',
@@ -20,7 +21,11 @@ export class AccountsPage {
     private modalCtrl: ModalController, private transferProvider: TransferProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    this.init();
+  }
+
+  init(){
     this.accounts = this.accountProvider.getAccountsLocal();
     this.accountsChunk = _.chain(this.accounts)
       .groupBy((account: Account) => account.type)
@@ -81,7 +86,7 @@ export class AccountsPage {
             img: data.destinationAccount.img,
             name: data.destinationAccount.name
           }
-        })
+        }).then(() => this.init());
       }
     });
 

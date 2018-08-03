@@ -1,22 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { ViewController } from 'ionic-angular';
+import { ElementSelectComponent } from '../element-select/element-select';
+import { AccountProvider } from '../../providers/account/account';
+import _ from 'lodash';
+import { Account } from '../../interfaces';
 
-/**
- * Generated class for the EditAccountComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'edit-account',
   templateUrl: 'edit-account.html'
 })
-export class EditAccountComponent {
+export class EditAccountComponent implements OnInit {
 
-  text: string;
+  @ViewChild('a') elementSelect: ElementSelectComponent;
 
-  constructor() {
-    console.log('Hello EditAccountComponent Component');
-    this.text = 'Hello World';
+  constructor(private accountsService: AccountProvider, private viewCtrl: ViewController) {
+
+  }
+
+  ngOnInit() {
+    let elements = _.chain(this.accountsService.getAccountsLocal())
+    .map(a => {
+      return {
+        key: a.key,
+        name: a.name,
+        img: a.img
+      }
+    })
+    .value();
+    this.elementSelect.loadElements(elements);
+  }
+
+  accountSelected(selectedAccount: Account) {
+    let account:Account = _.chain(this.accountsService.getAccountsLocal())
+      .filter((a :Account) => a.key == selectedAccount.key)
+      .first()
+      .value();
+
+    this.viewCtrl.dismiss(account);
+  }
+
+  cancel() {
+    this.viewCtrl.dismiss();
   }
 
 }

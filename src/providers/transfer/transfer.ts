@@ -12,7 +12,7 @@ export class TransferProvider {
   transfers: Transfer[];
 
   constructor(private db: AngularFireDatabase) {
-    this.transfersUrl = 'budgetExpenses/';
+    this.transfersUrl = 'transfers/';
     this.transferRef = this.db.list(this.transfersUrl);
   }
 
