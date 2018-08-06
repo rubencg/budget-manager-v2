@@ -189,11 +189,17 @@ export class ExpensesByCategoryPage {
     this.title = moment(date).locale('es-mx').format('MMMM YYYY');
 
     if (this.expensesList) {
-      this.expensesList.setEntries(date, this.entryProvider.getExpensesLocal());
+      let entries = _.chain(this.entryProvider.getExpensesLocal())
+        .filter((e: Expense) => e.fromAccount.id == this.account.key)
+        .value();
+      this.expensesList.setEntries(date, entries);
     }
 
     if (this.incomesList) {
-      this.incomesList.setEntries(date, this.entryProvider.getIncomesLocal());
+      let entries = _.chain(this.entryProvider.getIncomesLocal())
+        .filter((e: Income) => e.toAccount.id == this.account.key)
+        .value();
+      this.incomesList.setEntries(date, entries);
     }
   }
 
