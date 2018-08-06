@@ -8,6 +8,7 @@ import { ElementSelectComponent } from './element-select/element-select';
 import { EntryListComponent } from './entry-list/entry-list';
 import { EditAmountComponent } from './edit-amount/edit-amount';
 import { EditAccountComponent } from './edit-account/edit-account';
+import { EditCategoryComponent } from './edit-category/edit-category';
 
 @NgModule({
 	declarations: [EndOfTheMonthComponent,
@@ -17,7 +18,8 @@ import { EditAccountComponent } from './edit-account/edit-account';
     EntryListComponent,
     EditAmountComponent,
     EditAccountComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    EditCategoryComponent
     ],
 	imports: [
     IonicModule
@@ -29,7 +31,8 @@ import { EditAccountComponent } from './edit-account/edit-account';
     EntryListComponent,
     EditAmountComponent,
     EditAccountComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    EditCategoryComponent
     ]
 })
 export class ComponentsModule {}

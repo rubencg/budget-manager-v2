@@ -27,7 +27,7 @@ import { SelectSubcategoryPage } from '../pages/select-subcategory/select-subcat
 import { SelectSubcategoryPageModule } from '../pages/select-subcategory/select-subcategory.module';
 import { SelectDatePage } from '../pages/select-date/select-date';
 import { SelectDatePageModule } from '../pages/select-date/select-date.module';
-import { DatePicker } from '../../node_modules/@ionic-native/date-picker';
+import { DatePicker } from '@ionic-native/date-picker';
 import { ExpenseProvider } from '../providers/expense/expense';
 import { EntryProvider } from '../providers/entry/entry';
 import { IncomeProvider } from '../providers/income/income';
@@ -46,6 +46,8 @@ import { TransferProvider } from '../providers/transfer/transfer';
 import { AddTransferPageModule } from '../pages/add-transfer/add-transfer.module';
 import { AddTransferPage } from '../pages/add-transfer/add-transfer';
 import { AccountsPageModule } from '../pages/accounts/accounts.module';
+import { EditEntryPageModule } from '../pages/edit-entry/edit-entry.module';
+import { EditEntryPage } from '../pages/edit-entry/edit-entry';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ import { AccountsPageModule } from '../pages/accounts/accounts.module';
     ExpensesByCategoryPageModule,
     AddTransferPageModule,
     AccountsPageModule,
+    EditEntryPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -92,7 +95,8 @@ import { AccountsPageModule } from '../pages/accounts/accounts.module';
     BudgetExpensesPage,
     CategoryExpensesPage,
     ExpensesByCategoryPage,
-    AddTransferPage
+    AddTransferPage,
+    EditEntryPage
   ],
   providers: [
     StatusBar,

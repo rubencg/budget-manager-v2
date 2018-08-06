@@ -1,0 +1,20 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+      <ion-buttons start>
+        <button ion-button (click)="cancel()">
+          <span ion-text color="light">Cancelar</span>
+        </button>
+      </ion-buttons>
+      <ion-title>Editar</ion-title>
+    </ion-navbar>
+
+
+  </ion-header>
+
+
+  <ion-content padding>
+    <element-select #elementSelectCategory (onElementSelected)="categorySelected($event)" *ngIf="!selectedCategory" ></element-select>
+    <element-select #elementSelectSubCategories (onElementSelected)="subCategorySelected($event)" *ngIf="selectedCategory" ></element-select>
+
+  </ion-content>

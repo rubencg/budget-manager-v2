@@ -40,6 +40,21 @@ export class IncomeProvider {
     return incomeReturn;
   }
 
+  applyIncome(income: Income) {
+    let account: Account = _.chain(this.accountProvider.getAccountsLocal())
+      .filter((a: Account) => a.key == income.toAccount.id)
+      .value()[0];
+
+    if (account) {
+      let newBalance: number = account.currentBalance + income.amount;
+      this.accountProvider.updateBalance(account.key, newBalance);
+      this.incomes
+        .update(income.key, {
+          isApplied: true
+        });
+    }
+  }
+
   applyIncomesOfTheDay(incomes: Income[], accounts: Account[]) {
     incomes.forEach(income => {
       let account: Account = _.chain(accounts)

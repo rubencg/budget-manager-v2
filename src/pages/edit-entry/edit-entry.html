@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span ion-text color="light">Cancelar</span>
+      </button>
+    </ion-buttons>
+    <ion-title>Editar</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="options" class="amount" (click)="editAmount(options.amount)">
+    {{ options.amount | currency:'USD':true:'1.2-2' }}
+  </div>
+
+  <ion-list *ngIf="options">
+    <button *ngIf="options.account" ion-item (click)="editAccount()">
+      {{ options.account.name }}
+    </button>
+    <button ion-item (click)="editCategory()">
+      {{ getCategoryName(options.category) }}
+    </button>
+    <ion-item>
+      <ion-textarea rows="3" [(ngModel)]="options.notes" placeholder="Notes..."></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="this.options">
+    <button *ngIf="this.options.entryType == 2 && this.options.showIncomeButton" (click)="applyIncome()" color="income" ion-button
+      full>
+      Aplicar entrada
+    </button>
+  </div>
+
+  <ion-footer *ngIf="options">
+    <button color="secondary" (click)="showDatePicker()" ion-button full>{{options.dateString}}</button>
+  </ion-footer>
+</ion-content>
