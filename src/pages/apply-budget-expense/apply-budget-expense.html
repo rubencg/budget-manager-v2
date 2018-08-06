@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>Seleccionar cuenta</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="light">Cancelar</span>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="amount" (click)="editAmount(amount)">
+    {{ amount | currency:'USD':true:'1.2-2' }}
+  </div>
+
+
+  <ion-item>
+    <h2>Origen:</h2>
+    <p *ngIf="!account">
+      <button ion-button block outline (click)="editFromAccount()">
+        {{ account ? account.name : "Selecciona cuenta" }}
+      </button>
+    </p>
+    <button ion-item *ngIf="account" (click)="editFromAccount()">
+      <ion-thumbnail item-left>
+        <img [src]="account.img">
+      </ion-thumbnail>
+      {{ account.name }}
+    </button>
+  </ion-item>
+  <ion-footer>
+    <button color="secondary" ion-button full (click)="showDatePicker()">{{dateString}}</button>
+  </ion-footer>
+</ion-content>

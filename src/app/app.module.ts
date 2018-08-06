@@ -48,6 +48,8 @@ import { AddTransferPage } from '../pages/add-transfer/add-transfer';
 import { AccountsPageModule } from '../pages/accounts/accounts.module';
 import { EditEntryPageModule } from '../pages/edit-entry/edit-entry.module';
 import { EditEntryPage } from '../pages/edit-entry/edit-entry';
+import { ApplyBudgetExpensePageModule } from '../pages/apply-budget-expense/apply-budget-expense.module';
+import { ApplyBudgetExpensePage } from '../pages/apply-budget-expense/apply-budget-expense';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import { EditEntryPage } from '../pages/edit-entry/edit-entry';
     AddTransferPageModule,
     AccountsPageModule,
     EditEntryPageModule,
+    ApplyBudgetExpensePageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     IonicModule.forRoot(MyApp)
   ],
@@ -96,7 +99,8 @@ import { EditEntryPage } from '../pages/edit-entry/edit-entry';
     CategoryExpensesPage,
     ExpensesByCategoryPage,
     AddTransferPage,
-    EditEntryPage
+    EditEntryPage,
+    ApplyBudgetExpensePage
   ],
   providers: [
     StatusBar,

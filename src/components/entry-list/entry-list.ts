@@ -56,13 +56,13 @@ export class EntryListComponent<T extends Entry> {
   }
 
   getAccountName(entry): string{
-    let account: Account;
+
     if(entry.fromAccount){
-      account = entry.fromAccount;
-    }else{
-      account = entry.toAccount;
+      return entry.fromAccount.name;
+    }else if (entry.toAccount) {
+      return entry.toAccount.name;
     }
-    return account.name;
+    return "";
   }
 }
 
