@@ -32,6 +32,7 @@
         </ion-avatar>
         <h2>{{entry.category.subcategory.name}}</h2>
         <p class="account">{{entry.fromAccount.name}}</p>
+        <p class="date">{{ getDate(entry.date) | titlecase }}</p>
         <p>{{entry?.notes}}</p>
         <ion-badge item-right>{{entry.amount | currency:'USD':true:'1.2-2' }}</ion-badge>
       </ion-item>

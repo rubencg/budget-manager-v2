@@ -60,6 +60,10 @@ export class CategoryExpensesPage {
 
   }
 
+  getDate(date: string){
+    return moment(+date).locale('es').format('dddd D');
+  }
+
 }
 
 interface ValueData {

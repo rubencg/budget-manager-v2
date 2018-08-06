@@ -15,6 +15,7 @@
                         <img [src]="entryOptions.getImage(entry)">
                     </ion-avatar>
                     <h2>{{entryOptions.elementTitle(entry)}}</h2>
+                    <p class="account">{{getAccountName(entry)}}</p>
                     <p>{{entry?.notes}}</p>
                     <ion-badge [color]="entryOptions.badgeColor" item-right>{{entry.amount | currency:'USD':true:'1.2-2' }}</ion-badge>
                 </ion-item>
@@ -41,6 +42,7 @@
                     <img [src]="entryOptions.getImage(entry)">
                 </ion-avatar>
                 <h2>{{entryOptions.elementTitle(entry)}}</h2>
+                <p class="account">{{getAccountName(entry)}}</p>
                 <p>{{entry?.notes}}</p>
                 <ion-badge [color]="entryOptions.badgeColor" item-right>{{entry.amount | currency:'USD':true:'1.2-2' }}</ion-badge>
             </ion-item>

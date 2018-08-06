@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import moment from 'moment';
 import { EntryListComponent, EntryListOptions } from '../../components/entry-list/entry-list';
-import { Income, Expense, BudgetExpense, Account } from '../../interfaces';
+import { Income, Expense, BudgetExpense, Account, EntryType } from '../../interfaces';
 import { EntryProvider } from '../../providers/entry/entry';
 import _ from 'lodash';
+import { AccountProvider } from '../../providers/account/account';
+import { EditEntryOptions, EditEntryPage } from '../edit-entry/edit-entry';
+import { IncomeProvider } from '../../providers/income/income';
+import { ExpenseProvider } from '../../providers/expense/expense';
 
 @IonicPage()
 @Component({
@@ -18,10 +22,10 @@ export class ExpensesByCategoryPage {
   account: Account;
 
   @ViewChild('expensesList') expensesList: EntryListComponent<Expense>;
-  expenseOptions: EntryListOptions<Expense>= {
+  expenseOptions: EntryListOptions<Expense> = {
     noElementsText: "No existen gastos",
     getEntries: () => {
-      return _.filter(this.entryProvider.getExpensesLocal(), (e:Expense) => e.fromAccount.id == this.account.key);
+      return _.filter(this.entryProvider.getExpensesLocal(), (e: Expense) => e.fromAccount.id == this.account.key);
     },
     badgeColor: 'primary',
     elementTitle: (expense: Expense) => {
@@ -30,9 +34,9 @@ export class ExpensesByCategoryPage {
     sliderOptions: null,
     currentDate: new Date(),
     getImage: (expense: Expense) => {
-      if(expense.category.subcategory.img){
+      if (expense.category.subcategory.img) {
         return expense.category.subcategory.img;
-      }else{
+      } else {
         return "assets/imgs/categories/png/signs.png";
       }
     }
@@ -41,7 +45,7 @@ export class ExpensesByCategoryPage {
   incomeOptions: EntryListOptions<Income> = {
     noElementsText: "No existen entradas",
     getEntries: () => {
-      return _.filter(this.entryProvider.getIncomesLocal(), (e:Income) => e.toAccount.id == this.account.key);
+      return _.filter(this.entryProvider.getIncomesLocal(), (e: Income) => e.toAccount.id == this.account.key);
     },
     badgeColor: 'secondary',
     elementTitle: (income: Income) => {
@@ -53,8 +57,9 @@ export class ExpensesByCategoryPage {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private entryProvider: EntryProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private expenseProvider: ExpenseProvider,
+    private entryProvider: EntryProvider, private accountProvider: AccountProvider,
+    private modalCtrl: ModalController, private incomeProvider: IncomeProvider) {
   }
 
   ionViewDidLoad() {
@@ -69,6 +74,115 @@ export class ExpensesByCategoryPage {
     setTimeout(() => {
       this.setNewDate(this.date);
     }, 10);
+  }
+
+  incomeSelected(income: Income) {
+    let initialAccount: Account = this.accountProvider.getAccountById(income.toAccount.id);
+    let initialAmount: number = income.amount;
+    let options: EditEntryOptions = {
+      account: income.toAccount,
+      amount: income.amount,
+      date: moment(new Date(+income.date)).toDate(),
+      entryType: EntryType.Income,
+      notes: income.notes,
+      category: income.category,
+      $key: income.key,
+      showIncomeButton: !income.isApplied
+    };
+    let modal = this.modalCtrl.create(EditEntryPage, {
+      options: options
+    });
+
+    modal.onDidDismiss((data: EditEntryOptions) => {
+      if (data) {
+        if (data.applyIncome) {
+          this.incomeProvider.applyIncome(income);
+        } else {
+          let newIncome: Income = {
+            date: moment(data.date).format('x'),
+            amount: data.amount,
+            category: {
+              id: data.category.id,
+              name: data.category.name,
+              subcategory: null,
+              img: data.category.img
+            },
+            notes: data.notes,
+            toAccount: data.account
+          };
+
+          this.incomeProvider.updateIncome(income.key, newIncome)
+            .then(() => {
+              this.setNewDate(this.date);
+
+              if (initialAccount.key != newIncome.toAccount.id) {
+                this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - initialAmount);
+                let newAccount: Account = this.accountProvider.getAccountById(newIncome.toAccount.id);
+                this.accountProvider.updateBalance(newAccount.key, newAccount.currentBalance + newIncome.amount);
+              } else if (initialAmount != newIncome.amount) {
+                this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - (initialAmount - newIncome.amount));
+              }
+            });
+        }
+      }
+    });
+
+    modal.present();
+  }
+
+  expenseSelected(expense: Expense): void {
+    let initialAccount: Account = this.accountProvider.getAccountById(expense.fromAccount.id);
+    let initialAmount: number = expense.amount;
+    let options: EditEntryOptions = {
+      account: expense.fromAccount,
+      amount: expense.amount,
+      date: moment(new Date(+expense.date)).toDate(),
+      entryType: EntryType.Expense,
+      notes: expense.notes,
+      category: expense.category,
+      $key: expense.key,
+      showIncomeButton: false
+    };
+    let modal = this.modalCtrl.create(EditEntryPage, {
+      options: options
+    });
+
+    modal.onDidDismiss((data: EditEntryOptions) => {
+      if (data) {
+        let newExpense: Expense = {
+          date: moment(data.date).format('x'),
+          amount: data.amount,
+          category: {
+            id: data.category.id,
+            name: data.category.name,
+            subcategory: {
+              id: data.category.subcategory.id,
+              name: data.category.subcategory.name,
+              img: data.category.subcategory.img
+            },
+            img: data.category.img
+          },
+          notes: data.notes,
+          fromAccount: data.account
+        };
+        console.log(newExpense);
+
+        this.expenseProvider.updateExpense(expense.key, newExpense)
+          .then(() => {
+            this.setNewDate(this.date);
+
+            if (initialAccount.key != newExpense.fromAccount.id) {
+              this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance + initialAmount);
+              let newAccount: Account = this.accountProvider.getAccountById(newExpense.fromAccount.id);
+              this.accountProvider.updateBalance(newAccount.key, newAccount.currentBalance - newExpense.amount);
+            } else if (initialAmount != newExpense.amount) {
+              this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance + (initialAmount - newExpense.amount));
+            }
+          });
+      }
+    });
+
+    modal.present();
   }
 
   private setNewDate(date: Date) {

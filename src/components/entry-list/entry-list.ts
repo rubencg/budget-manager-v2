@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import _ from 'lodash';
 import moment from 'moment';
-import { Entry } from '../../interfaces';
+import { Entry, Income, Account } from '../../interfaces';
 
 @Component({
   selector: 'entry-list',
@@ -53,6 +53,16 @@ export class EntryListComponent<T extends Entry> {
 
   elemetClicked($event) {
     this.elementSelected.emit($event);
+  }
+
+  getAccountName(entry): string{
+    let account: Account;
+    if(entry.fromAccount){
+      account = entry.fromAccount;
+    }else{
+      account = entry.toAccount;
+    }
+    return account.name;
   }
 }
 
