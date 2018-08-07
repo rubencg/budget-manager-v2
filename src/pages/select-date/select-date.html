@@ -20,6 +20,9 @@
         ></ion-datetime>-->
 
     </ion-item>
+    <ion-item *ngIf="entryType == 3">
+      <ion-input type="number" [(ngModel)]="repeatTimes" placeholder="Repetir veces"></ion-input>
+    </ion-item>
     <ion-item>
       <ion-textarea rows="6" [(ngModel)]="notes" placeholder="Notes..."></ion-textarea>
     </ion-item>

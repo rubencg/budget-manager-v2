@@ -19,6 +19,7 @@ export class SelectDatePage {
   date: Date = moment().toDate();
   title: string;
   loadingScreen: Loading;
+  repeatTimes: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker,
     private loadingCtrl: LoadingController, private alertCtrl: AlertController,
@@ -96,10 +97,25 @@ export class SelectDatePage {
             });
         });
     } else if (this.entryType == EntryType.BudgetExpense) {
+      let date = momentDate;
+      if(this.repeatTimes > 1){
+        for (let index = 0; index < this.repeatTimes - 1; index++) {
+          date = date.add('days', 7 * index);
+          let e: BudgetExpense = {
+            amount: +this.navParams.data.result,
+            category: category,
+            date: date.format('x'),
+            notes: this.notes
+          }
+          this.budgetExpenseProvider.saveBudgetExpense(e);
+        }
+        date = date.add('days', 7);
+      }
+
       let e: BudgetExpense = {
         amount: +this.navParams.data.result,
         category: category,
-        date: momentDate.format('x'),
+        date: date.format('x'),
         notes: this.notes
       }
 
