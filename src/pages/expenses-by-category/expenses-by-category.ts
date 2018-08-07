@@ -2,13 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import moment from 'moment';
 import { EntryListComponent, EntryListOptions } from '../../components/entry-list/entry-list';
-import { Income, Expense, BudgetExpense, Account, EntryType } from '../../interfaces';
+import { Income, Expense, BudgetExpense, Account, EntryType, Transfer } from '../../interfaces';
 import { EntryProvider } from '../../providers/entry/entry';
 import _ from 'lodash';
 import { AccountProvider } from '../../providers/account/account';
 import { EditEntryOptions, EditEntryPage } from '../edit-entry/edit-entry';
 import { IncomeProvider } from '../../providers/income/income';
 import { ExpenseProvider } from '../../providers/expense/expense';
+import { TransferProvider } from '../../providers/transfer/transfer';
 
 @IonicPage()
 @Component({
@@ -55,10 +56,31 @@ export class ExpensesByCategoryPage {
     currentDate: new Date(),
     getImage: (income: Income) => income.category.img
   };
+  @ViewChild('transferList') transferList: EntryListComponent<Transfer>;
+  transferOptions: EntryListOptions<Transfer> = {
+    noElementsText: "No existen transferencias",
+    getEntries: () => {
+      return _.filter(this.transferProvider.getLocalTransfers(), (e: Transfer) => e.toAccount.id == this.account.key || e.fromAccount.id == this.account.key);
+    },
+    badgeColor: 'secondary',
+    elementTitle: (transfer: Transfer) => {
+      let account: Account = this.navParams.get("account");
+
+      return account.key == transfer.toAccount.id ? transfer.fromAccount.name : transfer.toAccount.name;
+    },
+    sliderOptions: null,
+    currentDate: new Date(),
+    getImage: (transfer: Transfer) => {
+      let account: Account = this.navParams.get("account");
+
+      return account.key == transfer.toAccount.id ? transfer.fromAccount.img : transfer.toAccount.img;
+    },
+    account: this.navParams.get("account")
+  };
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private expenseProvider: ExpenseProvider,
-    private entryProvider: EntryProvider, private accountProvider: AccountProvider,
+    private entryProvider: EntryProvider, private accountProvider: AccountProvider, private transferProvider: TransferProvider,
     private modalCtrl: ModalController, private incomeProvider: IncomeProvider) {
   }
 
@@ -74,6 +96,10 @@ export class ExpensesByCategoryPage {
     setTimeout(() => {
       this.setNewDate(this.date);
     }, 10);
+  }
+
+  transferSelected(transfer: Transfer){
+
   }
 
   incomeSelected(income: Income) {
@@ -200,6 +226,13 @@ export class ExpensesByCategoryPage {
         .filter((e: Income) => e.toAccount.id == this.account.key)
         .value();
       this.incomesList.setEntries(date, entries);
+    }
+
+    if (this.transferList) {
+      let entries = _.chain(this.transferProvider.getLocalTransfers())
+        .filter((e: Transfer) => e.toAccount.id == this.account.key || e.fromAccount.id == this.account.key)
+        .value();
+      this.transferList.setEntries(date, entries);
     }
   }
 

@@ -9,6 +9,7 @@ import { EndOfTheMonthComponent } from '../../components/end-of-the-month/end-of
 import _ from 'lodash';
 import moment from 'moment';
 import { EntryProvider } from '../../providers/entry/entry';
+import { TransferProvider } from '../../providers/transfer/transfer';
 
 @Component({
   selector: 'page-home',
@@ -20,7 +21,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private authProvider: AuthProvider, private accountProvider: AccountProvider,
     private alertCtrl: AlertController, private loadingCtrl: LoadingController, private categoryProvider:CategoryProvider,
-    private entryProvider: EntryProvider) {
+    private entryProvider: EntryProvider, private transferProvider: TransferProvider) {
     this.loading = this.loadingCtrl.create();
     this.loading.present();
 
@@ -30,6 +31,7 @@ export class HomePage {
     this.loadIncomes();
     this.loadBudgets();
     this.loadExpenses();
+    this.transferProvider.getAllTransfers();
   }
 
   loadAccounts(){

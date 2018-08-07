@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import _ from 'lodash';
 import moment from 'moment';
-import { Entry, Income, Account } from '../../interfaces';
+import { Entry, Income, Account, Transfer } from '../../interfaces';
 
 @Component({
   selector: 'entry-list',
@@ -56,6 +56,10 @@ export class EntryListComponent<T extends Entry> {
   }
 
   getAccountName(entry): string{
+    if(this.entryOptions.account)
+    {
+      return "";
+    }
 
     if(entry.fromAccount){
       return entry.fromAccount.name;
@@ -63,6 +67,16 @@ export class EntryListComponent<T extends Entry> {
       return entry.toAccount.name;
     }
     return "";
+  }
+
+  getBadgeColor(entry){
+    if(this.entryOptions.account)
+    {
+      let entryTransfer:Transfer = entry;
+      return this.entryOptions.account.key == entryTransfer.fromAccount.id ? 'expense' : 'income';
+    }else{
+      return this.entryOptions.badgeColor;
+    }
   }
 }
 
@@ -74,6 +88,7 @@ export interface EntryListOptions<T extends Entry> {
   getImage: (e: T) => string;
   sliderOptions: SliderOption<T>[];
   currentDate: Date;
+  account?: Account;
 }
 
 export interface SliderOption<T> {

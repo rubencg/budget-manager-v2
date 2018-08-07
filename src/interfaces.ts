@@ -29,12 +29,9 @@ export interface BudgetExpense extends Entry {
   category: CategoryBasic;
 }
 
-export interface Transfer {
-  key?: string;
+export interface Transfer extends Entry {
   fromAccount: IdNameBasic;
   toAccount: IdNameBasic;
-  amount: number;
-  date: string;
 }
 
 export interface CategoryBasic {

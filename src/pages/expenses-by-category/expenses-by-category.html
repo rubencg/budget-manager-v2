@@ -23,6 +23,9 @@
     <!-- Starts Incomes -->
     <entry-list #incomesList id="incomesList" (elementSelected)="incomeSelected($event)" [options]="incomeOptions" *ngSwitchCase="'2'"
       [changingDate]="date"></entry-list>
+    <!-- Starts Incomes -->
+    <entry-list #transferList id="transfersList" (elementSelected)="transferSelected($event)" [options]="transferOptions" *ngSwitchCase="'3'"
+      [changingDate]="date"></entry-list>
   </div>
 </ion-content>
 <ion-footer>
@@ -33,6 +36,9 @@
       </ion-segment-button>
       <ion-segment-button value="2">
         Entradas
+      </ion-segment-button>
+      <ion-segment-button value="3">
+        Transferencias
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

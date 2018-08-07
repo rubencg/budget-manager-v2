@@ -13,19 +13,21 @@ export class TransferProvider {
 
   constructor(private db: AngularFireDatabase) {
     this.transfersUrl = 'transfers/';
-    this.transferRef = this.db.list(this.transfersUrl);
+    this.transferRef = db.list(this.transfersUrl).snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
   }
 
   saveTransfer(expense: Transfer): firebase.database.ThenableReference {
-    return this.transferRef.push(expense);
+    return this.db.list(this.transfersUrl).push(expense);
   }
 
-  deleteTransfer($key: string): firebase.database.ThenableReference {
-    return this.transferRef.remove($key);
+  deleteTransfer($key: string): Promise<void> {
+    return this.db.list(this.transfersUrl).remove($key);
   }
 
-  updateTransfer($key: string, be: Transfer): firebase.database.ThenableReference {
-    return this.transferRef
+  updateTransfer($key: string, be: Transfer): Promise<void> {
+    return this.db.list(this.transfersUrl)
       .update($key, {
         amount: be.amount,
         fromAccount: be.fromAccount,
@@ -34,7 +36,15 @@ export class TransferProvider {
       });
   }
 
-  getLocalBudgetExpenses(): Transfer[] {
+  getAllTransfers(): Observable<Transfer[]> {
+    this.transferRef.subscribe(a => {
+      this.transfers = a;
+    });
+
+    return this.transferRef;
+  }
+
+  getLocalTransfers(): Transfer[] {
     return this.transfers;
   }
 
