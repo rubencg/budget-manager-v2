@@ -89,13 +89,14 @@ export class IncomesPage {
           this.incomeProvider.updateIncome(income.key, newIncome)
             .then(() => {
               this.setNewDate(this.date);
-
-              if (initialAccount.key != newIncome.toAccount.id) {
-                this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - initialAmount);
-                let newAccount: Account = this.accountProvider.getAccountById(newIncome.toAccount.id);
-                this.accountProvider.updateBalance(newAccount.key, newAccount.currentBalance + newIncome.amount);
-              } else if (initialAmount != newIncome.amount) {
-                this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - (initialAmount - newIncome.amount));
+              if(data.applyIncome || income.isApplied){
+                if (initialAccount.key != newIncome.toAccount.id) {
+                  this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - initialAmount);
+                  let newAccount: Account = this.accountProvider.getAccountById(newIncome.toAccount.id);
+                  this.accountProvider.updateBalance(newAccount.key, newAccount.currentBalance + newIncome.amount);
+                } else if (initialAmount != newIncome.amount) {
+                  this.accountProvider.updateBalance(initialAccount.key, initialAccount.currentBalance - (initialAmount - newIncome.amount));
+                }
               }
             });
         }
