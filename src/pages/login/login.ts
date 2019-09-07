@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { TabsPage } from '../tabs/tabs';
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

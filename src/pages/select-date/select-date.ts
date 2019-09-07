@@ -98,18 +98,23 @@ export class SelectDatePage {
         });
     } else if (this.entryType == EntryType.BudgetExpense) {
       let date = momentDate;
-      if(this.repeatTimes > 1){
-        for (let index = 0; index < this.repeatTimes - 1; index++) {
-          date = date.add('days', 7 * index);
-          let e: BudgetExpense = {
-            amount: +this.navParams.data.result,
-            category: category,
-            date: date.format('x'),
-            notes: this.notes
-          }
-          this.budgetExpenseProvider.saveBudgetExpense(e);
+      if (this.repeatTimes > 1) {
+        let budgetExpense: BudgetExpense = {
+          amount: +this.navParams.data.result,
+          category: category,
+          date: date.format('x'),
+          notes: this.notes
         }
-        date = date.add('days', 7);
+        let times: number = this.repeatTimes;
+
+        for (let index = 0; index < times; index++) {
+          if(index > 0) date.add(7, 'days');
+          
+          budgetExpense.date = moment(date).format('x');
+          if (index < times - 1) {
+            this.budgetExpenseProvider.saveBudgetExpense(budgetExpense);
+          }
+        }
       }
 
       let e: BudgetExpense = {
